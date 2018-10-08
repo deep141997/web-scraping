@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep 11 16:03:21 2018
+
+@author: deepak
+"""
+
+import urllib # library for fetch data
+wiki="https://en.wikipedia.org/wiki/List_of_state_and_union_territory_capitals_in_India"
+file=urllib.request.urlopen(wiki) #query will execute and return and html page
+print(file) # print object
+page=file.read()
+#print(page)
+from bs4 import BeautifulSoup # import beautifulsoup tools parse the data
+soup=BeautifulSoup(page) #it will raise an warning no parser was ecplicity specified by defaul xmls 
+soup=BeautifulSoup(page,"html.parser") # parse the html in the page variable and store it in beautiful soup format
+print(soup.prettify) # to print the data 
+""" working with html tags """
+#print(soup.title) # it will return title
+#print(soup.title.string) # it will return string
+#print(soup.a) # to extract link in the page 
+
+print("\n")
+
+"""all_links=soup.find_all("a")
+#print(all_links) # print all links including title,other information and link
+print(type(all_links)) #<class 'bs4.element.ResultSet'>
+for link in all_links:
+  print(link.get("href"))""" # get method to fetch specific 
+# anpther method to get link only href
+"""for i,link in enumerate(soup.find_all('a')):
+    print(i,link.get("href"))"""
+#we have to find all tables in the html source code then we are seeking for table which contain state and capital information
+all_tables=soup.find_all('table')
+#print(all_tables)
+
+
+# now we have to fing right table by know the class name in browser go to inspect element
+
+right_table=soup.find('table',class_="wikitable sortable plainrowheaders")
+
+print(right_table)
+#for i,td in enumerate(right_table):
+ #   print(i,'td')
+# to find all list
+"""list_city=soup.find_all('li') 
+for i,li in enumerate(list_city):
+    print(i,li.text)"""
+# soup.children #all element are selected at a time it return a list type 
+for item in list(soup.children):
+    print(type(item))
+tags=soup.children[2]
+print(tags)

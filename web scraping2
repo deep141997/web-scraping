@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Sep 12 19:15:38 2018
+
+@author: deepak
+"""
+
+""" we have to fetch 100 mathimatican name"""
+""" we have to import 2 packages request for url and beautiful soup for processing html pages"""
+
+"""from requests import get 
+from requests.exceptions import RequestException
+from bs4 import BeautifulSoup
+from contextlib import closing
+def simple_get(url):
+    try:
+        with closing(get(url,stream=True)) as resp:
+            if is_good_response(resp): # if content is html/xml return it otherwise return none
+                return resp.content
+            else:
+                None
+    except Exception as arg:
+        print("error",arg)
+def is_good_response(resp):
+    #return true if response is html
+    content_type=resp.headers['content_type'].lower()
+    return(resp.statuscode==200
+           and content_type is not None
+           and content_type.find('html')>-1)
+raw_html=simple_get('http://www.fabpedigree.com/james/mathmen.htm')
+print(raw_html) """
+"""
+import requests
+page=requests.get('http://www.fabpedigree.com/james/mathmen.htm')
+print(page)
+print(page.status_code)
+page.content
+"""
+import urllib
+from bs4 import BeautifulSoup
+url='http://www.fabpedigree.com/james/mathmen.htm'
+page=urllib.request.urlopen(url)
+raw_html=page.read()
+#print(raw_html)
+soup=BeautifulSoup(raw_html,"html.parser")
+#print(soup.prettify)
+"""print(soup.title) # show the title
+print(soup.a) #it show top link
+#all_links=soup.find_all("a")
+print(all_links) # it show all links,information and title
+for link in all_links:
+    print(link.get("href")) """
+# we have to extarct list of name of 100 mathematician
+# with the help of browser we can examine the html source code 
+
+"""list_math1=soup.find_all('a')
+list_math2=soup.select('a')
+print(list_math1==list_math2) find_all and select method are same """
+# to print list of all mathematician
+"""list_math=soup.find_all('li')
+for i,li in enumerate(list_math):
+    print(i,li.text)"""
+# to print all paragraph
+
+"""for i,bq in enumerate(soup.find_all('blackquote')):
+  print(i,bq.text) """
+  
+# to show image
+"""img_tags=soup.find_all('img')
+print(img_tags)
+print(type(img_tags))
+for img in img_tags:
+   print(img.get('src'))"""
+# to show src image
+for i,img in enumerate(soup.find_all('img')):
+    print(i,img.get('src'))
