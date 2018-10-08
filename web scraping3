@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 13 02:05:15 2018
+
+@author: deepak
+"""
+
+import requests
+from bs4 import BeautifulSoup
+#  when we run request.get it return a response object 
+page=requests.get("http://dataquestio.github.io/web-scraping-pages/simple.html")
+print(page.status_code) #response oject has a property status code and status_code=200 page succesfully downloaded
+#print(page.content) # read data in html format
+soup=BeautifulSoup(page.content,"html.parser")
+#print(soup.prettify)
+#print(soup.title)
+# to fetch the data of paragraph
+paragraph=soup.find('p')
+print(paragraph.text)
+for i,pg in enumerate(soup.find_all('p')):
+    print(i,pg.text)
+# all tags are nested we can select all the elements at the first level 
+# we have to use children method of soup it will generate list so we have to use list
+#print(soup.children) list type 
+for item in list(soup.children):
+    print(type(item))    #<class 'bs4.element.Doctype'>
+                         #<class 'bs4.element.NavigableString'>
+                         #<class 'bs4.element.Tag'> 
+tags=list(soup.children)[2]
+print(tags)
+print(type(tags))
+tags_html=list(tags.children)
+print(tags_html)
+print(type(tags_html))
+for tag in tags_html:
+    print(tag.get_text())
