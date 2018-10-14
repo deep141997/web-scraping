@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Oct  9 00:43:57 2018
+
+@author: deepak
+"""
+
+# in web scraping we have to copy and paste proxy if u dont want use pool of proxies
+import requests  # u can also urllib libraray
+from lxml.html import fromstring
+from bs4 import BeautifulSoup
+import re
+def get_proxies():
+    url="https://free-proxy-list.net/"
+    page=requests.get(url)
+    print(page.status_code) # response object has a status code property if 200 sucess
+    parser=fromstring(page.text)
+    proxies=set()
+    
+    soup=BeautifulSoup(page.content,"html.parser")
+    #print(page.content) # page will print with html pages
+    #print(soup.prettify) # to print data
+    text=soup.text
+    print(text)   # only text will print
+    print(type(text)) # it will print type of text <class,<'str'>>
+    proxy_list_3=re.findall(r"ago\w\w\w.\w\w\w.\w\w\w.\w\w\w",text)
+    
+    print(proxy_list_3)
+    print(type(proxy_list_3))
+    print(len(proxy_list_3))
+    for i in range(len(proxy_list_3)-1):
+        proxy_list=proxy_list_3[i][3:]
+        print(proxy_list)
+   
+    
+   
+    
+    #print(soup.title) # title will print 
+    
+    # to find all image 
+    
+    """all_image=soup.find_all('img') # contains all image src png all
+    for img in all_image:
+        print(img.get('src')) """
+        
+    # alternative way to get image using enumerate
+    
+    """for i,img in enumerate(soup.find_all('img')):
+        print(i,img.get('src')) """
+        
+        # to print all links
+        
+    all_links=soup.find_all("a")
+    #print(all_links) # it will print all_links include href and other link also 
+    
+    # we have to extract only href
+    
+    #for link in all_links:
+     #   print(link.get("href")) 
+        
+        # to extrace to table
+        
+    all_tables=soup.find_all('table')
+   # print(all_tables)
+    rows=soup.find_all('tbody',class_="hr")
+    print(rows)
+        
+get_proxies()
